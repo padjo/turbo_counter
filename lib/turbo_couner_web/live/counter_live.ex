@@ -4,30 +4,58 @@ defmodule TurboCounerWeb.CountLive do
   alias TurboCounter.Counters
 
   def mount(_params, _session, socket) do
-    :timer.send_interval(1000, self(), :tick)
-    {:ok, socket |> new |> add_counter(:tick, 0)}
+
+    {:ok, socket |> new }
   end
 
   defp new(socket) do
     assign(socket, counters: Counters.new())
   end
 
-  defp add_counter(socket, name, count) do
-    assign(socket, counters: Counters.add_counter(socket.assigns.counters, name, count))
+  defp add_counter(socket) do
+    assign(socket, counters: Counters.add_counter(socket.assigns.counters))
   end
 
   def render(assigns) do
     ~L"""
+    <hr>
+    <%= for {name, count} <- @counters do %>
+      name <%= name %> : Count <%= count %>
+          <button phx-click="inc" phx-value-name="<%= name %>">inc</button>
+          | <button phx-click="dec" phx-value-name="<%= name %>">dec</button>
+          | <button phx-click="clear" phx-value-name="<%= name %>">clear</button>
+    </p>
+    <% end %>
 
-    <h1> count is <%=@counters.tick%></h1>
+    <button phx-click="add" >add</button>
     """
   end
 
-  defp inc_count(socket, name) do
+  defp inc_count(socket,name) do
     assign(socket, counters: Counters.inc(socket.assigns.counters, name))
   end
 
-  def handle_info(name, socket) do
-    {:noreply, inc_count(socket, name)}
+  defp dec_count(socket,name) do
+    assign(socket, counters: Counters.dec(socket.assigns.counters, name))
+  end
+
+  defp clear_count(socket,name) do
+    assign(socket, counters: Counters.clear(socket.assigns.counters, name))
+  end
+
+  def handle_event("inc", %{"name" => name}, socket) do
+    {:noreply, inc_count(socket,name)}
+  end
+
+  def handle_event("dec", %{"name" => name}, socket) do
+    {:noreply, dec_count(socket,name)}
+  end
+
+  def handle_event("clear", %{"name" => name}, socket) do
+    {:noreply, clear_count(socket,name)}
+  end
+
+  def handle_event("add", _, socket) do
+    {:noreply, add_counter(socket)}
   end
 end
