@@ -5,6 +5,8 @@
 
 ###  third commit and 4th groxio video, we can add rows via the add button , the key will be generated and the score value can be increased decreased or cleared. This commit was mainly about looping over map state to show on the browser and capturing and processing clicks on each item and rerendering new processed state. next step is a form to take in the name of the team similar to a note , validate the form without saving it and show new information to the user
 
+### fourth commit and 5th groxio video, introducted a form to allow user input and validate it via changesets . bit more work that it sounds, at least it felt like it
+
 This is a code along to the groxio first liveview video see https://grox.io/language/liveview/course for the 1st video which is on youtube, the rest 
 are hosted on the groxio website which requires course payment. 
 
