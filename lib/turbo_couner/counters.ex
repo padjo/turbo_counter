@@ -1,9 +1,10 @@
 defmodule TurboCounter.Counters do
+  alias TurboCounter.Counters.Counter
   def new do
     %{}
   end
 
-  def add_counter(counters, name, value) do
+  def add_counter(counters, name, value \\ 0) do
     Map.put(counters, name, value)
   end
 
@@ -20,6 +21,10 @@ defmodule TurboCounter.Counters do
     |>to_string()
   rescue
     _e -> "1"
+  end
+
+  def validate_new_counter(counters, params) do
+    Counter.new_changeset(params, counters)
   end
 
   def rem_counter(counters, name) do
