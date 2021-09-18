@@ -1,4 +1,4 @@
-![screenshot](https://ibb.co/jHp99T0)
+https://ibb.co/jHp99T0
 
 
 ## TurboCouner 1st commit -- simple liveview/phoenix/elixir app that ad's a counter to the browser that's updated every second and teaches creating state on the socket via the mount function , changing state via a :timer.send_interval(ms,self(),msg)function called every x milliseconds which will need to be handled and the state change by the handle_info function which changes the count value on the socket and triggers a browser update of just that variable. 
